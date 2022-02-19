@@ -1,25 +1,5 @@
-.title {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    font-size: 6em;
+.logo {
+    /* font-size: 2.5em; */
     font-weight: bold;
-    font-family: 'Consolas', 'Courier New', Courier, monospace;
-  }
-  .title::after {
-    content: "";
-    width: 10px;
-    height: 5.5rem;
-    background: rgb(22, 22, 22);
-    display: inline-block;
-    animation: blink 1s step-end infinite;
-  }
-  
-  @keyframes blink {
-    50% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
+    font-family: 'Comfortaa', sans-serif;
+}

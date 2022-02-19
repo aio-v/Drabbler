@@ -1,10 +1,16 @@
-import Logo from '../components/logo'
+import { Container, useTheme } from '@mui/material';
+import Header from '../components/header/headerBar';
 
 export default function Layout({ children }) {
+    const theme = useTheme();
     return (
         <>
-        <Logo />
-        <main></main>
+        <Header />
+        <Container maxWidth="sm">
+        <main>
+            {children}
+        </main>
+        </Container>
         </>
     )
 }
