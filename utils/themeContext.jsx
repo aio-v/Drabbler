@@ -14,9 +14,6 @@ const ThemeContext = ({ children }) => {
                   background: linear-gradient(to right bottom, #0b082e, #11001d, #000000);
                 }
               ` : `
-                body {
-                    background: linear-gradient(to right bottom, #0b082e, #11001d, #000000);
-                }
               `,
             },
           },

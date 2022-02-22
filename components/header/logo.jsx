@@ -1,8 +1,11 @@
 import React from 'react';
-import styles from '../../styles/Logo.module.css';
+import Link from 'next/link';
+import { Typography } from '@mui/material';
 
 export default function Logo() {
     return (
-        <div className={styles.logo}>drabbler</div>
+        <Typography variant="h4" sx={{fontFamily:'Comfortaa', fontWeight:700,}}>
+            <Link href="/"><a>drabbler</a></Link>
+        </Typography>
     )
 }

@@ -16,7 +16,7 @@ export default function MyApp({ Component, pageProps }) {
           <meta charSet="utf-8" />
           <meta name="description" content="A WYSIWYG word editor for prompts, drabbles, and writing exercises." />
           <link
-              href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;600&display=swap"
+              href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap"
               rel="stylesheet"
             />
           <link

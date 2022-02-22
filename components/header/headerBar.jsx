@@ -8,8 +8,9 @@ export default function Header() {
         <AppBar 
         position="sticky"
         color="transparent"
-        elevation={0}>
-            <Container maxWidth="xl">
+        elevation={0}
+        >
+            <Container maxWidth="auto" sx={{p: 2,}}>
                 <Toolbar disableGutters>
                     <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
                         <Logo />

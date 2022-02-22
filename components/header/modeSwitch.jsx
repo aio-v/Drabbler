@@ -12,7 +12,7 @@ export default function ModeSwitch() {
   
     return (
         <Box>
-            <IconButton size="medium" onClick={colorMode.toggleColorMode} sx={{ m: 1, color:'primary.dark' }}>
+            <IconButton size="medium" onClick={colorMode.toggleColorMode} sx={theme.palette.mode === 'dark' ? { m: 1, color:'primary.dark' } : {m: 1, color:'secondary.dark'}}>
             {theme.palette.mode === 'dark' ? <LightModeRoundedIcon /> : <DarkModeRoundedIcon />}
             </IconButton>
         </Box>
