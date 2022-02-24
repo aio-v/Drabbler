@@ -8,14 +8,6 @@ export default function Home() {
   return (
       <Layout>
         <Intro />
-        {/* <Box maxWidth="auto">
-          <Box sx={{ flexGrow: 1 }}>
-            <CreateButton />
-          </Box>
-          <Box>
-            <LoadButton />
-          </Box>
-        </Box> */}
         <Grid
           container
           direction="row"
