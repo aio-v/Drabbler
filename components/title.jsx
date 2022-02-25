@@ -1,17 +1,18 @@
 import React from 'react';
 import { useTheme } from '@mui/material';
 import { TextField, Box } from '@mui/material';
+import ToEditorButton from './buttons/toEditorButton';
 
 export default function Title() {
     const theme = useTheme();
     return (
         <Box sx={{
-            mt: 6,
+            mt: 2,
             display: 'flex',
             flexDirection: 'column',
             alignContents: 'center',
             textAlign: 'center',
-            rowGap: '50px',
+            rowGap: 7,
         }}>
             <Box>
                 <TextField
@@ -79,6 +80,7 @@ export default function Title() {
                 }
             }} 
             />
+            <ToEditorButton />
         </Box>
     );
 }
