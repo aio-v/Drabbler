@@ -20,11 +20,6 @@ export default function Title() {
                 variant="standard"
                 margin="normal"
                 color={theme.palette.mode === 'dark' ? "primary" : "secondary"}
-                inputBaseProps={{
-                    styles: {
-                        color: theme.palette.secondary.main
-                    }
-                }}
                 inputProps={{
                     style: {
                         fontFamily: 'Prompt',

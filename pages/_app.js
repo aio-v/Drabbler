@@ -1,10 +1,9 @@
-import React from 'react'
-import '../styles/globals.css'
-import CssBaseline from '@mui/material/CssBaseline'
-import ThemeContext from '../utils/themeContext'
-import Head from 'next/head'
-import Script from 'next/script'
-
+import React from 'react';
+import '../styles/globals.css';
+import CssBaseline from '@mui/material/CssBaseline';
+import ThemeContext from '../utils/themeContext';
+import Script from 'next/script';
+import Head from 'next/head';
 
 export default function MyApp({ Component, pageProps }) {
   return (
@@ -15,14 +14,6 @@ export default function MyApp({ Component, pageProps }) {
           <title>Drabbler</title>
           <meta charSet="utf-8" />
           <meta name="description" content="A WYSIWYG word editor for prompts, drabbles, and writing exercises." />
-          <link
-              href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap"
-              rel="stylesheet"
-            />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap"
-            rel="stylesheet"
-          />
         </Head>
 
         <ThemeContext>
