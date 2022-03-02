@@ -1,10 +1,11 @@
 import React from 'react';
 import { useTheme } from '@mui/material';
 import { TextField, Box } from '@mui/material';
-import ToEditorButton from './buttons/toEditorButton';
+import { ToWorkspaceButton } from '../components/buttons/toWorkspaceButton';
 
-export default function Title() {
+export function Title() {
     const theme = useTheme();
+
     return (
         <Box sx={{
             mt: 2,
@@ -59,13 +60,6 @@ export default function Title() {
                     
                 },
             }}
-            OutlinedInputProps={{
-                style: {
-                    notchedOutline: {
-                        borderColor: '#FFFFFF'
-                    }
-                }
-            }}
             InputLabelProps={{
                 style: {
                     fontFamily: 'Prompt',
@@ -80,7 +74,8 @@ export default function Title() {
                 }
             }} 
             />
-            <ToEditorButton />
+            
+            <ToWorkspaceButton />
         </Box>
     );
 }

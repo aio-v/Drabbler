@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@draft-js-plugins/editor": "^4.1.2",
+    "@draft-js-plugins/inline-toolbar": "^4.1.2",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@mui/icons-material": "^5.4.2",

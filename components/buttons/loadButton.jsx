@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '@mui/material';
 import { useTheme } from '@emotion/react';
 
-export default function CreateButton() {
+export function LoadButton() {
     const theme = useTheme();
 
     return (

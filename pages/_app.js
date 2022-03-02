@@ -1,9 +1,10 @@
 import React from 'react';
 import '../styles/globals.css';
 import CssBaseline from '@mui/material/CssBaseline';
-import ThemeContext from '../utils/themeContext';
 import Script from 'next/script';
 import Head from 'next/head';
+
+import ThemeContext from '../utils/themeContext';
 
 export default function MyApp({ Component, pageProps }) {
   return (

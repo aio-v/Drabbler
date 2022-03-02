@@ -1,9 +1,9 @@
 import React from 'react';
-import { AppBar, Container, Toolbar, Typography } from '@mui/material';
-import ModeSwitch from './modeSwitch';
-import Logo from './logo';
+import { AppBar, Container, Box, Typography } from '@mui/material';
+import { ModeSwitch } from './modeSwitch';
+import { Logo } from './logo';
 
-export default function Header() {
+export function Header() {
     return (
         <AppBar 
         position="sticky"
@@ -11,12 +11,12 @@ export default function Header() {
         elevation={0}
         >
             <Container maxWidth="auto" sx={{p: 2,}}>
-                <Toolbar disableGutters>
+                <Box sx={{display: "flex", justifyContent: "space-between"}}>
                     <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
                         <Logo />
                     </Typography>
                     <ModeSwitch />
-                </Toolbar>
+                </Box>
             </Container>
         </AppBar>
     );

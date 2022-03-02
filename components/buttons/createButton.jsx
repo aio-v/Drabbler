@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { Button } from '@mui/material';
 import { useTheme } from '@emotion/react';
 
-export default function CreateButton() {
+export function CreateButton() {
     const theme = useTheme();
     const router = useRouter();
 

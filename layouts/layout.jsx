@@ -1,7 +1,7 @@
 import { Container, useTheme } from '@mui/material';
-import Header from '../components/header/headerBar';
+import { Header } from '../components/header/headerBar';
 
-export default function Layout({ children }) {
+export function Layout({ children }) {
     const theme = useTheme();
     return (
         <>
