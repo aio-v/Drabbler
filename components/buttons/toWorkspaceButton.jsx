@@ -6,10 +6,10 @@ import styles from '../../styles/ToWorkspaceButton.module.css';
 
 export function ToWorkspaceButton() {
     const theme = useTheme();
-    const page = useContext(ToggleContext);
+    const context = useContext(ToggleContext);
     return (
         <Box sx={{position: 'relative'}}>
-            <button className={styles.button} onClick={page.togglePage}>
+            <button className={styles.button} onClick={context.page.togglePage}>
                 <Typography sx={{
                     pb: 2, 
                     fontFamily: 'Comfortaa', 
