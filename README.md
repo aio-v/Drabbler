@@ -4,8 +4,11 @@ First, install:
 
 ```bash
 npm install draft-js
+npm install @draft-js-plugins/editor
+npm install @draft-js-plugins/inline-toolbar
 npm install @mui/material @emotion/react @emotion/styled
 npm install npm install @mui/icons-material
+
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
