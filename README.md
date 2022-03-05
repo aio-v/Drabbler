@@ -6,6 +6,7 @@ First, install:
 npm install draft-js
 npm install @draft-js-plugins/editor
 npm install @draft-js-plugins/inline-toolbar
+npm install @draft-js-plugins/counter
 npm install @mui/material @emotion/react @emotion/styled
 npm install npm install @mui/icons-material
 
