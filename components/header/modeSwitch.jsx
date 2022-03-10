@@ -1,7 +1,5 @@
 import React, { useContext } from 'react';
-import { IconButton } from '@mui/material';
-import { Box } from '@mui/material';
-import { useTheme } from '@mui/material';
+import { Box, IconButton, useTheme } from '@mui/material';
 import DarkModeRoundedIcon from '@mui/icons-material/DarkModeRounded';
 import LightModeRoundedIcon from '@mui/icons-material/LightModeRounded';
 import { ColorModeContext } from '../../utils/themeContext';

@@ -9,7 +9,7 @@ export function Logo() {
         <Typography variant="h4" sx={{
             fontFamily:'Comfortaa', 
             fontWeight:700, 
-            color: theme.palette.mode === 'dark' ? 'primary.main' : 'secondary.main'}}>
+            color: theme.palette.mode === 'dark' ? 'primary.dark' : 'secondary.dark'}}>
             <Link href="/"><a>drabbler</a></Link>
         </Typography>
     )

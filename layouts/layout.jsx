@@ -7,7 +7,7 @@ export function Layout({ children }) {
     return (
         <React.Fragment>
         <Header />
-        <Container maxWidth="md" >
+        <Container maxWidth="lg">
         <main>
             {children}
         </main>

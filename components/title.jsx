@@ -17,7 +17,7 @@ export function Title() {
         }}>
             <Box>
                 <TextField
-                id="title" 
+                fullWidth
                 helperText="Title"
                 variant="standard"
                 margin="normal"
@@ -26,18 +26,14 @@ export function Title() {
                     style: {
                         fontFamily: 'Prompt',
                         fontSize: 45,
+                        fontWeight: 300,
                         textAlign: 'center'
-                    },
-                }}
-                InputLabelProps={{
-                    style: {
-                        fontFamily: 'Prompt',
                     },
                 }}
                 FormHelperTextProps={{
                     style: {
                         textAlign: 'center',
-                        fontFamily: 'Prompt',
+                        fontFamily: 'Comfortaa',
                         fontSize: 15,
                         color: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.secondary.main,
                     }
@@ -45,30 +41,33 @@ export function Title() {
                 />
             </Box>
             <TextField
-            id="summary"
             helperText="Summary"
             minRows={9}
             multiline
-            variant={theme.palette.mode === 'dark' ? "filled" : "outlined"}
+            variant= "filled" //{theme.palette.mode === 'dark' ? "filled" : "outlined"}
             margin="normal"
             color={theme.palette.mode === 'dark' ? "primary" : "secondary"}
+            sx={{
+                "& .MuiInputBase-root": {
+                    px: 2,
+                },
+                "& .MuiFilledInput-root": {
+                    background: theme.palette.mode === 'dark' ? "" : "rgba(0, 0, 0, 0.02)",
+                },
+            }}
             inputProps={{
                 style: {
                     fontFamily: 'Prompt',
-                    fontSize: 25,
+                    fontSize: 24,
+                    fontWeight: 300,
                     lineHeight: '35px',
                     
-                },
-            }}
-            InputLabelProps={{
-                style: {
-                    fontFamily: 'Prompt',
                 },
             }}
             FormHelperTextProps={{
                 style: {
                     textAlign: 'center',
-                    fontFamily: 'Prompt',
+                    fontFamily: 'Comfortaa',
                     fontSize: 15,
                     color: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.secondary.main,
                 }

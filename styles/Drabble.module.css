@@ -1,14 +1,37 @@
-/* .editor {
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    cursor: text;
-    padding: 16px;
-    border-radius: 2px;
-    margin-bottom: 2em;
-    box-shadow: inset 0px 1px 8px -3px #ABABAB;
-    background: #fefefe;
-  }
-  
-  .editor :global(.public-DraftEditor-content) {
-    min-height: 140px;
-  } */
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 25px;
+    margin-bottom: 25px;
+}
+
+.wrapper {
+    background-color: rgba(202, 202, 202, 0.1);
+    width: calc(85% - 25px);
+    padding: 10px 10px 10px 10px;
+    transition: 300ms linear;
+}
+
+.wrapper:focus-within {
+    padding-bottom: 50px;
+}
+
+.wrapper :global(.DraftEditor-root) {
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.wrapper :global(.public-DraftEditor-content) {
+    min-height: 100px;
+}
+
+.wrapper :global(.public-DraftEditor-content :not(:last-child)) {
+    margin-bottom: 10px;
+}
+
+.subwrapper {
+    font-family: 'Comfortaa';
+    width: 15%;
+}
