@@ -26,6 +26,7 @@ export class Drabble extends React.Component {
         this.state = {
             editorState: EditorState.createEmpty(),
             wordCount: 0,
+            key: props.key,
         };
         this.onChange = this.onChange.bind(this);
         this.handleKeyCommand = this.handleKeyCommand.bind(this);
@@ -62,6 +63,7 @@ export class Drabble extends React.Component {
 
         return (
             <div className={styles.container}>
+
                 <div className={styles.wrapper} onClick={this.focus.bind(this)}>
                     <Editor
                     editorState={this.state.editorState}
@@ -92,7 +94,6 @@ export class Drabble extends React.Component {
                         <this.WordCounter countFunction={this.countWords} /> words
                     </div>
                 </div>
-                
             </div>
         );
     }

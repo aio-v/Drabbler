@@ -36,3 +36,12 @@ a {
   background-color: rgba(156, 156, 156, 0.418);
 }
 
+ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+li {
+  padding: 0;
+  list-style-type: none;
+}
