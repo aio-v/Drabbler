@@ -10,7 +10,7 @@ export function ModeSwitch() {
   
     return (
         <Box>
-            <IconButton size="medium" onClick={colorMode.toggleColorMode} sx={theme.palette.mode === 'dark' ? { m: 1, color:'primary.dark' } : {m: 1, color:'secondary.dark'}}>
+            <IconButton size="medium" onClick={colorMode.toggleColorMode} sx={theme.palette.mode === 'dark' ? { m: 1, color:'primary.main' } : {m: 1, color:'secondary.main'}}>
             {theme.palette.mode === 'dark' ? <LightModeRoundedIcon /> : <DarkModeRoundedIcon />}
             </IconButton>
         </Box>

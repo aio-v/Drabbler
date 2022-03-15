@@ -1,14 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Box, TextField, Typography, Tooltip, Zoom, useTheme } from '@mui/material';
 import { DrabbleEditor } from './workspaceComponents/drabbleEditor';
 import { LoadProjectMenu } from './workspaceComponents/menu';
 import { LoadToTitleButton } from './buttons/toTitleButton';
 
+import styles from '../styles/GoalHeader.module.css'
 
 export function Workspace() {
+    const [headerAtTop, setHeaderAtTop] = useState(true);
+    const ref = useRef(null);
+
+    const setHeaderPosition = (entries) => {
+        const [ entry ] = entries;
+        setHeaderAtTop(entry.isIntersecting);
+    }
+
+    useEffect(() => {
+        const current = ref.current;
+        const observer = new IntersectionObserver(setHeaderPosition, {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.01,
+        });
+        if(current) observer.observe(current);
+        return () => {
+            if(current) observer.unobserve(current);
+        }
+    }, [ref]);
+
+
     return (
         <Box>
-            <GoalHeader />
+            <Box id="scroll_tracker" ref={ref} style={{width: '1px', height: '1px', position: 'absolute', top: 0}}></Box>
+            <GoalHeader classStyle={headerAtTop} />
             <DrabbleEditor />
             <Box sx={{
                 position: "fixed",
@@ -23,49 +47,53 @@ export function Workspace() {
     )
 }
 
-export function GoalHeader() {
+export function GoalHeader({ classStyle }) {
+    const [transition, setTransition] = useState(false);
+    const [style, setStyle] = useState(true);
+
+    useEffect(() => {
+        setTransition(true);
+        const timeoutID = setTimeout(() => {            // apply style change after transition finishes
+            setStyle(classStyle);
+            setTransition(false);
+        }, 250);
+        return () => {
+            clearTimeout(timeoutID);
+        }
+    }, [classStyle]);
+
+    useEffect(() => {                                   // runs on component mount to stop transition on mounting
+        setTransition(false);
+    }, []);
+
     return (
-        <Box sx={{
-            mt: 4,
-            mb: 5,
-        }}>
-            <DrabbleCount />
-            <Typography
-            sx={{
-                display: 'inline',
-                fontFamily: 'Comfortaa',
-                fontWeight: 300,
-                fontSize: '28px'
-            }}>
-            {" drabbles at"} </Typography> 
-            <InputGoal /> 
-            <Typography
-            sx={{
-                display: 'inline',
-                fontFamily: 'Comfortaa',
-                fontWeight: 300,
-                fontSize: '28px'
-            }}> words per drabble </Typography>
-        </Box> 
-        
+        <React.Fragment>
+            <Box className={styles.box + " " + (transition ? styles.transition : "") + " " + (style ? styles.at_top : styles.not_at_top)}>
+                <DrabbleCount classStyle={style} />
+                <Typography className={style ? styles.at_top_text : styles.not_at_top_text}>
+                    {" drabbles at"} 
+                </Typography> 
+                <InputGoal classStyle={style} /> 
+                <Typography  className={style ? styles.at_top_text : styles.not_at_top_text}> 
+                    words per drabble 
+                </Typography>
+            </Box>
+            <Box sx={{height: '100px', mb: '15px', display: !style ? 'block' : 'none'}}>
+                {/*placeholder box to stop page from jumping on transition */}
+            </Box>      
+        </React.Fragment>
     )
 }
 
-export function DrabbleCount() {
+export function DrabbleCount({ classStyle }) {
     return (
-        <Typography
-            sx={{
-                display: 'inline',
-                fontFamily: 'Comfortaa',
-                fontWeight: 200,
-                fontSize: '48px'
-        }}>
+        <Typography className={classStyle ? styles.at_top_count : styles.not_at_top_count}>
         0 
         </Typography>
     )
 }
 
-export function InputGoal() {
+export function InputGoal({ classStyle }) {
     const [goal, setGoal] = useState(100);
     const theme = useTheme();
 
@@ -85,17 +113,18 @@ export function InputGoal() {
     return (
         <Tooltip 
         TransitionComponent={Zoom} 
-        title="A drabble's length is between 10 to 500 words. Default: 100 words." 
-        placement="top" 
+        title={classStyle ? "A drabble's length is between 10 to 500 words. Default: 100 words." : ''} 
+        placement="top"
         PopperProps={{
             style: {
-                maxWidth: '255px',
+                maxWidth: '260px',
             }
         }}>
             <TextField
+            className={classStyle ? styles.at_top_input : styles.not_at_top_input}
             type="number"
             variant="standard"
-            helperText="Word Limit"
+            helperText={classStyle ? "Target" : ''}
             color={theme.palette.mode === 'dark' ? "primary" : "secondary"}
             value={goal}
             sx={{
@@ -112,15 +141,6 @@ export function InputGoal() {
                 "&:hover .MuiFormHelperText-root": {
                     opacity: 1,
                 },
-            }}
-            inputProps={{
-                style: {
-                    width: '4ch',
-                    fontFamily: 'Comfortaa',
-                    fontSize: '48px',
-                    fontWeight: 200,
-                    textAlign: 'center',
-                }
             }}
             FormHelperTextProps={{
                 style: {

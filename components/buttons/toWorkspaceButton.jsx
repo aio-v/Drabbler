@@ -8,7 +8,9 @@ export function ToWorkspaceButton() {
     const theme = useTheme();
     const context = useContext(ToggleContext);
     return (
-        <Box sx={{position: 'relative'}}>
+        <Box sx={{
+            position: 'relative',
+        }}>
             <button className={styles.button} onClick={context.page.togglePage}>
                 <Typography sx={{
                     pb: 2, 

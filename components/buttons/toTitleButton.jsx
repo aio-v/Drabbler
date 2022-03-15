@@ -10,7 +10,7 @@ export function ToTitleButton() {
 
     return (
         <Box sx={{
-            position: "relative",
+            position: 'relative',
         }}>
             <button className={styles.button} onClick={context.page.togglePage}>
                 <Box sx={{position: 'relative'}}>

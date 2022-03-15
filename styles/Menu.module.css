@@ -3,7 +3,7 @@
     height: 100%;
     top: 0%;
     right: 0%;
-    padding-left: 50px;
+    padding-left: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,9 +27,9 @@
     row-gap: 15px;
     transition: transform 250ms;
     cursor: pointer;
-    right: -30px;
+    right: -80px;
 }
 
 .wrapper:hover .menu {
-    transform: translateX(-60px);
+    transform: translateX(-110px);
 }

@@ -5,8 +5,17 @@ import { ToggleContext } from '../../pages/project';
 import styles from '../../styles/Menu.module.css';
 
 export function ProjectMenu() {
+    const theme = useTheme();
+
     return (
-        <React.Fragment>
+        <Box 
+        className={styles.menu} 
+        sx={{
+            borderRadius: 24,
+            backgroundColor: theme.palette.mode === 'dark' ? 'primary.main' : 'secondary.main',
+            opacity: 0.8,
+            p: 1,
+        }}>
             <Box sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -18,7 +27,7 @@ export function ProjectMenu() {
                 <ExportButton />
             </Box>
             <TogglePromptButton />
-        </React.Fragment>
+        </Box>
     );
 }
 
@@ -33,7 +42,7 @@ export function ProjectMenuIcon() {
                 opacity: 0.2,
                 transform: 'rotate(270deg)'
             }}>
-                MENU
+                {"MENU"}
             </Box>
         </Box>
     )
@@ -55,9 +64,7 @@ export function LoadProjectMenu() {
     return <Grow in={load && context.checked} {...(context.checked ? {timeout: 800} : {timeout: 0})}>
             <Box className={styles.wrapper}>
                 <ProjectMenuIcon />
-                <Box className={styles.menu} >
-                    <ProjectMenu />
-                </Box>
+                <ProjectMenu />
             </Box>
         </Grow>;
 }

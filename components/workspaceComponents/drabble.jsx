@@ -107,11 +107,11 @@ export function Prompt() {
         placement="right-start"
         >
             <TextField 
-                // label="Prompt" 
+                className="prompt_field"
                 fullWidth
                 helperText="Prompt"
                 variant="standard"
-                color={theme.palette.mode === 'dark' ? "primary" : "secondary"}
+                color={theme.palette.mode === 'dark' ? 'primary' : 'secondary' }
                 sx={{
                     mb: 1,
                 }}
