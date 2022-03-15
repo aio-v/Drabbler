@@ -26,7 +26,6 @@ export class Drabble extends React.Component {
         this.state = {
             editorState: EditorState.createEmpty(),
             wordCount: 0,
-            key: props.key,
         };
         this.onChange = this.onChange.bind(this);
         this.handleKeyCommand = this.handleKeyCommand.bind(this);
@@ -63,8 +62,7 @@ export class Drabble extends React.Component {
 
         return (
             <div className={styles.container}>
-
-                <div className={styles.wrapper} onClick={this.focus.bind(this)}>
+                <Wrapper onClick={this.focus.bind(this)}>
                     <Editor
                     editorState={this.state.editorState}
                     onChange={this.onChange}
@@ -86,8 +84,7 @@ export class Drabble extends React.Component {
                         )
                     }
                     </this.InlineToolbar>
-                    
-                </div>
+                </Wrapper>
                 <div className={styles.subwrapper}>
                     <Prompt />
                     <div className={styles.word_counter}>
@@ -97,6 +94,19 @@ export class Drabble extends React.Component {
             </div>
         );
     }
+}
+
+export function Wrapper({ onClick, children }) {
+    const theme = useTheme();
+
+    return (
+        <div 
+        className={styles.wrapper} 
+        style={{backgroundColor: theme.palette.mode === 'dark' ? 'rgba(202, 202, 202, 0.1)' : 'rgba(202, 202, 202, 0.2)'}}
+        onClick={onClick}>
+            {children}
+        </div>
+    )
 }
 
 export function Prompt() {

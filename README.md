@@ -10,7 +10,7 @@ npm install @draft-js-plugins/counter
 npm install @mui/material @emotion/react @emotion/styled
 npm install npm install @mui/icons-material
 npm install react-transition-group --save
-npm install react react-dom react-movable --save
+npm install react-beautiful-dnd --save
 
 ```
 

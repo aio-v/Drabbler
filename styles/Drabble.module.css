@@ -7,7 +7,7 @@
 }
 
 .wrapper {
-    background-color: rgba(202, 202, 202, 0.1);
+    
     width: calc(85% - 25px);
     padding: 10px 10px 10px 10px;
     transition: 300ms linear;

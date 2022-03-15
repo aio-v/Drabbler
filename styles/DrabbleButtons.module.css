@@ -1,0 +1,20 @@
+.new_button {
+    width: 100%;
+    font-family: 'Comfortaa';
+    font-size: 24px;
+    font-weight: 300;
+    padding: 10px;
+}
+
+.delete_button {
+    opacity: 0;
+    transition: opacity 200ms linear;
+}
+
+.drabble_wrapper {
+    position: relative;
+}
+
+.drabble_wrapper:hover .delete_button {
+    opacity: 0.8;
+}

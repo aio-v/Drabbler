@@ -107,7 +107,7 @@ export function InputGoal({ classStyle }) {
         else if (Number(e.target.value) < 10) 
             setGoal(10);
         else
-            setGoal(e.target.value);
+            setGoal(Number.parseInt(e.target.value));
     }
 
     return (
@@ -124,7 +124,7 @@ export function InputGoal({ classStyle }) {
             className={classStyle ? styles.at_top_input : styles.not_at_top_input}
             type="number"
             variant="standard"
-            helperText={classStyle ? "Target" : ''}
+            helperText={classStyle ? "Target Length" : ''}
             color={theme.palette.mode === 'dark' ? "primary" : "secondary"}
             value={goal}
             sx={{

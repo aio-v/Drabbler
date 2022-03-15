@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { IconButton, Tooltip, Zoom, useTheme } from '@mui/material';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import FolderOpenOutlinedIcon from '@mui/icons-material/FolderOpenOutlined';
-// import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import PictureAsPdfOutlinedIcon from '@mui/icons-material/PictureAsPdfOutlined';
 import SavingsOutlinedIcon from '@mui/icons-material/SavingsOutlined';
 
@@ -30,7 +29,7 @@ export function LoadButton() {
         <Tooltip
         disableFocusListener
         TransitionComponent={Zoom}
-        title="Open Project"
+        title="Load Project"
         placement="left"
         >
             <IconButton size="medium" sx={{color: theme.palette.mode === 'dark' ? 'rgba(25, 9, 58, 0.7)' : 'rgb(255, 255, 255)'}}>
@@ -72,7 +71,7 @@ export function TogglePromptButton() {
         <Tooltip
         disableFocusListener
         TransitionComponent={Zoom}
-        title="Toggle Prompts"
+        title={"Toggle Prompts " + (promptMode ? "Off" : "On")}
         placement="left"
         >
             <IconButton size="medium" 

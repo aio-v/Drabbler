@@ -9,7 +9,7 @@ export function LoadButton() {
         <Button variant={theme.palette.mode === 'dark' ? "text" : "outlined"}
                 color={theme.palette.mode === 'dark' ? "primary" : "secondary"}
                 size="large">
-        Load Project
+        Load A Project
         </Button>
     );
 }
