@@ -19,6 +19,7 @@ export function Title() {
                 <TextField
                 fullWidth
                 helperText="Title"
+                placeholder="If All Else Fails, Write Your Own"
                 variant="standard"
                 margin="normal"
                 color={theme.palette.mode === 'dark' ? "primary" : "secondary"}
@@ -42,6 +43,7 @@ export function Title() {
             </Box>
             <TextField
             helperText="Summary"
+            placeholder={'"Canon\'s okay and all, but guys, WHAT IF."\n\nA story of a writer\'s work in progress, told in 100-word snippets.'}
             minRows={9}
             multiline
             variant= "filled" //{theme.palette.mode === 'dark' ? "filled" : "outlined"}

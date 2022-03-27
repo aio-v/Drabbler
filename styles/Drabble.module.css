@@ -3,11 +3,9 @@
     justify-content: space-between;
     align-items: center;
     column-gap: 25px;
-    margin-bottom: 25px;
 }
 
 .wrapper {
-    
     width: calc(85% - 25px);
     padding: 10px 10px 10px 10px;
     transition: 300ms linear;

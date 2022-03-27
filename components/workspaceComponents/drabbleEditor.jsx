@@ -8,29 +8,52 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Drabble } from './drabble';
 
 import styles from '../../styles/DrabbleButtons.module.css';
+import { filter } from 'draft-js/lib/DefaultDraftBlockRenderMap';
 
 const EditorContext = React.createContext();
 
 export function DrabbleEditor() {
     const [children, setChildren] = useState([{
         drabble: <Drabble />,
+        lastPos: true,
         key: uuidv4(),
     }]);
 
     const addBtn = useMemo(
         () => ({
-            addDrabble: () => {
-                setChildren(childrenArr => [...childrenArr, {
-                    drabble: <Drabble />,
-                    key: uuidv4(),
-                }]);
+            insertDrabble: (pos) => {
+                setChildren((childrenArr) => {
+                    if(pos == childrenArr.length - 1) {
+                        childrenArr[childrenArr.length - 1].lastPos = false;
+                        return [...childrenArr, {
+                            drabble: <Drabble />,
+                            lastPos: true,
+                            key: uuidv4(),
+                        }];
+                    }
+                        
+                    childrenArr.splice(
+                        pos + 1, 0, {
+                            drabble: <Drabble />,
+                            lastPos: false,
+                            key: uuidv4(),
+                        }
+                    )
+                    return [...childrenArr];
+                })
             }
         }), []
     );
     const delBtn = useMemo( 
         () => ({
             deleteDrabble: (id) => {
-                setChildren(childrenArr => childrenArr.filter(drabble => drabble.key != id));
+                // TBA: Add code to stop deleting the last drabble
+                setChildren(childrenArr => {
+                    const filtered = childrenArr.filter(child => child.key != id);
+                    if(filtered.length > 0 && !filtered[filtered.length - 1].lastPos)
+                        filtered[filtered.length - 1].lastPos = true;
+                    return filtered;
+                });
             }
         }), []
     );
@@ -40,11 +63,21 @@ export function DrabbleEditor() {
         if (!result.destination) {
             return;
         }
+
+        if(result.destination.index == children.length - 1) {
+            children[children.length - 1].lastPos = false;
+            children[result.source.index].lastPos = true;
+        }
+        else if(result.source.index == children.length - 1) {
+            children[children.length - 2].lastPos = true;
+            children[result.source.index].lastPos = false;
+        }
+
         const items = reorder(
             children,
             result.source.index,
             result.destination.index );
-   
+
         setChildren(() => items);
     }
 
@@ -75,7 +108,6 @@ export function DrabbleEditor() {
                         </Droppable>
                     </DragDropContext>
                 </TransitionGroup>
-                <NewDrabbleButton />
             </Box>
         </EditorContext.Provider>
     );
@@ -100,11 +132,11 @@ export function DraggableDrabble({ drabble, index }) {
                     >
                         <Collapse in>
                             <Box className={styles.drabble_wrapper}>
-                                <Box
+                                <Box className={styles.button_box}
                                 sx={{
                                     position: 'absolute',
                                     left: '-4%', 
-                                    top: 'calc(50% - 48px)', 
+                                    top: 'calc(50% - 24px)', 
                                     display: 'flex',
                                     flexDirection: 'column',
                                     justifyContent: 'center',
@@ -120,6 +152,7 @@ export function DraggableDrabble({ drabble, index }) {
                                 </Box>
                                 {drabble.drabble}
                             </Box>
+                            <NewDrabbleButton last={drabble.lastPos} pos={index} />
                         </Collapse>
                     </div>
                 )
@@ -128,14 +161,29 @@ export function DraggableDrabble({ drabble, index }) {
     )
 }
 
-export function NewDrabbleButton() {
+export function NewDrabbleButton({ last, pos }) {
+    const [onMouseEnter, setOnMouseEnter] = useState(false);
     const editor = useContext(EditorContext);
     const theme = useTheme();
 
     return (
-        <Button variant="text" color={theme.palette.mode === 'dark' ? "primary" : "secondary"} className={styles.new_button} onClick={editor.addBtn.addDrabble}>
-            New Drabble
-        </Button>
+        <Box 
+        sx={{ width: '100%', py: 2, cursor:'pointer' }} 
+        onMouseEnter={() => setOnMouseEnter(true)} 
+        onMouseLeave={() => setOnMouseEnter(false)}>
+            <Collapse in={onMouseEnter || last} timeout={350}>
+                    <Button 
+                    className={styles.new_button} 
+                    variant="text" 
+                    color={theme.palette.mode === 'dark' ? "primary" : "secondary"}
+                    sx={{
+                        backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 233, 125, 0.1)' : 'rgba(110, 198, 255, 0.2)',
+                    }}
+                    onClick={() => editor.addBtn.insertDrabble(pos)}>
+                        New Drabble
+                    </Button>
+            </Collapse>
+        </Box>
     );
 }
 

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, createContext, useMemo } from 'react';
 import { Box, TextField, Typography, Tooltip, Zoom, useTheme } from '@mui/material';
 import { DrabbleEditor } from './workspaceComponents/drabbleEditor';
 import { LoadProjectMenu } from './workspaceComponents/menu';
@@ -6,8 +6,12 @@ import { LoadToTitleButton } from './buttons/toTitleButton';
 
 import styles from '../styles/GoalHeader.module.css'
 
+export const GoalContext = createContext(100);
+
 export function Workspace() {
     const [headerAtTop, setHeaderAtTop] = useState(true);
+    const [wordCountGoal, setWordCountGoal] = useState(100);
+    const [completedCount, setCompletedCount] = useState(0);
     const ref = useRef(null);
 
     const setHeaderPosition = (entries) => {
@@ -28,12 +32,24 @@ export function Workspace() {
         }
     }, [ref]);
 
+    const counter = useMemo(
+        () => ({
+            triggerCount: (meetsWordCountGoal) => {
+                if(!meetsWordCountGoal)
+                    setCompletedCount(prev => prev > 0 ? prev - 1 : 0);
+                else
+                    setCompletedCount(prev => prev + 1);
+            }
+        }), []
+   );
 
     return (
         <Box>
             <Box id="scroll_tracker" ref={ref} style={{width: '1px', height: '1px', position: 'absolute', top: 0}}></Box>
-            <GoalHeader classStyle={headerAtTop} />
-            <DrabbleEditor />
+            <GoalHeader classStyle={headerAtTop} completedCount={completedCount} goalCallback={(goal) => {setWordCountGoal(goal)}} />
+            <GoalContext.Provider value={{wordCountGoal, counter}}>
+                <DrabbleEditor />
+            </GoalContext.Provider>
             <Box sx={{
                 position: "fixed",
                 bottom: "2.5%",
@@ -47,7 +63,7 @@ export function Workspace() {
     )
 }
 
-export function GoalHeader({ classStyle }) {
+export function GoalHeader({ classStyle, completedCount, goalCallback }) {
     const [transition, setTransition] = useState(false);
     const [style, setStyle] = useState(true);
 
@@ -69,11 +85,11 @@ export function GoalHeader({ classStyle }) {
     return (
         <React.Fragment>
             <Box className={styles.box + " " + (transition ? styles.transition : "") + " " + (style ? styles.at_top : styles.not_at_top)}>
-                <DrabbleCount classStyle={style} />
+                <DrabbleCount classStyle={style} count={completedCount} />
                 <Typography className={style ? styles.at_top_text : styles.not_at_top_text}>
                     {" drabbles at"} 
                 </Typography> 
-                <InputGoal classStyle={style} /> 
+                <InputGoal classStyle={style} goalCallback={goalCallback} /> 
                 <Typography  className={style ? styles.at_top_text : styles.not_at_top_text}> 
                     words per drabble 
                 </Typography>
@@ -85,17 +101,22 @@ export function GoalHeader({ classStyle }) {
     )
 }
 
-export function DrabbleCount({ classStyle }) {
+export function DrabbleCount({ classStyle, count }) {
     return (
         <Typography className={classStyle ? styles.at_top_count : styles.not_at_top_count}>
-        0 
+        {count} 
         </Typography>
     )
 }
 
-export function InputGoal({ classStyle }) {
+export function InputGoal({ classStyle, goalCallback }) {
     const [goal, setGoal] = useState(100);
     const theme = useTheme();
+
+    const changeGoal = (input) => {
+        goalCallback(input);
+        setGoal(input);
+    }
 
     const handleChange = (e) => {
         setGoal(e.target.value);
@@ -103,11 +124,11 @@ export function InputGoal({ classStyle }) {
 
     const handleBlur = (e) => {
         if (Number(e.target.value) > 500) 
-            setGoal(500);
+            changeGoal(500);
         else if (Number(e.target.value) < 10) 
-            setGoal(10);
+            changeGoal(10);
         else
-            setGoal(Number.parseInt(e.target.value));
+            changeGoal(Number.parseInt(e.target.value));
     }
 
     return (

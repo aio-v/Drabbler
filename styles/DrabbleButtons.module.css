@@ -1,8 +1,9 @@
 .new_button {
+    /* width: calc(85% - 25px); */
     width: 100%;
     font-family: 'Comfortaa';
-    font-size: 24px;
     font-weight: 300;
+    font-size: 18px;
     padding: 10px;
 }
 
@@ -15,6 +16,6 @@
     position: relative;
 }
 
-.drabble_wrapper:hover .delete_button {
+.button_box:hover .delete_button {
     opacity: 0.8;
 }

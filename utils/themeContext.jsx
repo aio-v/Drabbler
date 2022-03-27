@@ -26,7 +26,7 @@ const ThemeContext = ({ children }) => {
             contrastText: '#fafafa',
           },
           primary: {
-            light: '#ffe97d',
+            light: '#ffc979',
             main: '#ffb74d',
             dark: '#c88719',
             contrastText: '#fafafa',

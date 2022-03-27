@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useContext, useState, useEffect, useRef } from 'react';
 import { EditorState } from 'draft-js';
 import Editor from '@draft-js-plugins/editor';
-import createCounterPlugin from '@draft-js-plugins/counter';
 import createInlineToolbarPlugin, { Separator } from '@draft-js-plugins/inline-toolbar';
 import {
     ItalicButton,
@@ -13,29 +12,23 @@ import 'draft-js/dist/Draft.css';
 import '@draft-js-plugins/inline-toolbar/lib/plugin.css';
 import { TextField, useTheme, Tooltip, Zoom } from '@mui/material';
 
+import { GoalContext } from '../workspace';
+
 import styles from '../../styles/Drabble.module.css';
 
 
 export class Drabble extends React.Component {
+
     constructor(props) {
         super(props);
         this.inlineToolbarPlugin = createInlineToolbarPlugin();
         this.InlineToolbar = this.inlineToolbarPlugin.InlineToolbar;
-        this.counterPlugin = createCounterPlugin();
-        this.WordCounter = this.counterPlugin.CustomCounter;
         this.state = {
-            editorState: EditorState.createEmpty(),
-            wordCount: 0,
+            editorState: EditorState.createEmpty()
         };
         this.onChange = this.onChange.bind(this);
         this.handleKeyCommand = this.handleKeyCommand.bind(this);
-        this.countWords = this.countWords.bind(this);
     }
-
-    countWords(str) {
-        const wordArray = str.match(/([\w'-]+)/g); // matches words according to whitespace
-        return wordArray ? wordArray.length : 0;
-      }
 
     onChange(editorState) {
         this.setState({
@@ -59,7 +52,6 @@ export class Drabble extends React.Component {
     };
 
     render() {
-
         return (
             <div className={styles.container}>
                 <Wrapper onClick={this.focus.bind(this)}>
@@ -67,7 +59,7 @@ export class Drabble extends React.Component {
                     editorState={this.state.editorState}
                     onChange={this.onChange}
                     placeholder={"A drabble a day keeps the writer's block away..."}
-                    plugins={[this.inlineToolbarPlugin, this.counterPlugin]}
+                    plugins={[this.inlineToolbarPlugin]}
                     ref={(element) => {
                             this.editor = element;
                         }}
@@ -87,9 +79,7 @@ export class Drabble extends React.Component {
                 </Wrapper>
                 <div className={styles.subwrapper}>
                     <Prompt />
-                    <div className={styles.word_counter}>
-                        <this.WordCounter countFunction={this.countWords} /> words
-                    </div>
+                    <WordCounter editorState={this.state.editorState} />
                 </div>
             </div>
         );
@@ -144,4 +134,58 @@ export function Prompt() {
                 />
         </Tooltip>
     );
+}
+
+export function WordCounter({ editorState }) {
+    const [wordCount, setWordCount] = useState(0);
+    const [isComplete, setIsComplete] = useState(false); 
+    const completeRef = useRef(null);
+    const context = useContext(GoalContext);
+    const theme = useTheme();
+
+    useEffect(() => {
+        const plainText = editorState.getCurrentContent().getPlainText('');
+        const regex = /(?:\r\n|\r|\n)/g; // new line, carriage return, line feed
+        const cleanString = plainText.replace(regex, ' ').trim(); // replace above characters w/ space
+        const wordArray = cleanString.match(/([\w'-]+)/g); // matches words according to whitespace
+        setWordCount(wordArray ? wordArray.length : 0);
+    }, [editorState]);
+
+    useEffect(() => {
+        if(isComplete) {
+            if(wordCount != context.wordCountGoal) {
+                setIsComplete(false);
+                context.counter.triggerCount(false);
+            }
+        }
+        else if(wordCount == context.wordCountGoal) {
+            setIsComplete(true);
+            context.counter.triggerCount(true);
+        }
+    }, [wordCount, isComplete, context.wordCountGoal, context.counter]);
+
+    useEffect(() => {
+        completeRef.current = isComplete;
+    }, [isComplete]);
+
+    useEffect(() => {
+        return () => {
+            if(completeRef.current)
+                context.counter.triggerCount(false);
+        }
+    }, []);
+
+    return (
+        <div 
+        className={styles.word_counter}
+        style={{
+            color: wordCount > context.wordCountGoal ? 'rgb(209, 86, 86)' : 
+                    wordCount == context.wordCountGoal ? (
+                        theme.palette.mode === 'dark' ? theme.palette.primary.light : theme.palette.secondary.light
+                    ) : ''
+        }}
+        >
+            {wordCount} words
+        </div>
+    )
 }
