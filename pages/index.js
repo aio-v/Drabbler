@@ -11,13 +11,13 @@ export default function Home() {
         <Grid
           container
           direction="row"
-          justifyContent="space-between"
+          justifyContent="space-evenly"
           alignItems="center"
         >
-          <Grid item xl={6} align="center">
+          <Grid item xl={4} align="center">
             <CreateButton />
           </Grid>
-          <Grid item xl={6} align="center">
+          <Grid item xl={4} align="center">
             <LoadButton />
           </Grid>
         </Grid>

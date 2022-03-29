@@ -1,4 +1,4 @@
-import React, { useContext, useState, useMemo } from 'react';
+import React, { useContext, useState, useMemo, useEffect } from 'react';
 import { Box, Button, IconButton, useTheme, Collapse } from '@mui/material';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -17,53 +17,84 @@ import styles from '../../styles/DrabbleButtons.module.css';
 const EditorContext = React.createContext();
 
 export function DrabbleEditor() {
-    const [children, setChildren] = useState([{
-        drabble: <Drabble />,
-        lastPos: true,
-        key: uuidv4(),
-    }]);
+    const [loaded, setLoad] = useState(false);
+    const [changed, setChanged] = useState(false);
+    const [children, setChildren] = useState(() => {
+        const firstKey = uuidv4();
+        return [{
+            drabble: <Drabble drabbleKey={firstKey} />,
+            lastPos: true,
+            key: firstKey,
+        }]
+    });
+
+    useEffect(() => {       // load drabbles
+        const childrenStr = localStorage.getItem('children');
+        if(childrenStr) {
+            const strArr = childrenStr.split(',');
+            const childrenArr = strArr.map((key, index) => ({
+                drabble: <Drabble drabbleKey={key} />,
+                lastPos: index == strArr.length - 1 ? true : false,
+                key: key
+            }))
+            setChildren([...childrenArr]);
+        }
+        setLoad(true);
+    }, []);
+
+    useEffect(() => {
+        if(!loaded) return;
+        const timeoutId = setTimeout(() => {        // store drabble order by keys
+            localStorage.setItem('children', children.map((child) => (child.key)));
+        }, 2000);
+        setChanged(false);
+        return () => clearTimeout(timeoutId);
+    }, [changed, children]);
 
     const addBtn = useMemo(
         () => ({
             insertDrabble: (pos) => {
                 setChildren((childrenArr) => {
-                    if(pos == childrenArr.length - 1) {
+                    const nextKey = uuidv4();
+                    if(pos == childrenArr.length - 1) {     // append new drabble
                         childrenArr[childrenArr.length - 1].lastPos = false;
                         return [...childrenArr, {
-                            drabble: <Drabble />,
+                            drabble: <Drabble drabbleKey={nextKey} />,
                             lastPos: true,
-                            key: uuidv4(),
+                            key: nextKey,
                         }];
                     }
                         
-                    childrenArr.splice(
+                    childrenArr.splice(             // insert in middle of list
                         pos + 1, 0, {
-                            drabble: <Drabble />,
+                            drabble: <Drabble drabbleKey={nextKey} />,
                             lastPos: false,
-                            key: uuidv4(),
+                            key: nextKey,
                         }
                     )
                     return [...childrenArr];
                 })
+                setChanged(true);
             }
         }), []
     );
     const delBtn = useMemo( 
         () => ({
             deleteDrabble: (id) => {
-                // TBA: Add code to stop deleting the last drabble
                 setChildren(childrenArr => {
                     const filtered = childrenArr.filter(child => child.key != id);
-                    if(filtered.length > 0 && !filtered[filtered.length - 1].lastPos)
+                    if(filtered.length > 0 && !filtered[filtered.length - 1].lastPos)       // controls New Drabble button visibility
                         filtered[filtered.length - 1].lastPos = true;
                     return filtered;
                 });
+                localStorage.removeItem(id);
+                setChanged(true);
             }
         }), []
     );
     const childrenArrSize = useMemo(
         () => (children.length), [children]
-    )
+    );
     
     const onDragEnd = (result) => {
         // dropped outside the list
@@ -71,7 +102,7 @@ export function DrabbleEditor() {
             return;
         }
 
-        if(result.destination.index == children.length - 1) {
+        if(result.destination.index == children.length - 1) {       // controls whether New Drabble button is visible or not
             children[children.length - 1].lastPos = false;
             children[result.source.index].lastPos = true;
         }
@@ -86,9 +117,9 @@ export function DrabbleEditor() {
             result.destination.index );
 
         setChildren(() => items);
+        // setChanged(true);
     }
 
-    // a little function to help us with reordering the result
     const reorder = (list, startIndex, endIndex) => {
         const result = Array.from(list);
         const [removed] = result.splice(startIndex, 1);
@@ -237,11 +268,17 @@ export function DeleteDrabbleButton({ id }) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => {
+                    <Button
+                    color={theme.palette.mode === 'dark' ? "primary" : "secondary"} 
+                    onClick={() => {
                         editor.delBtn.deleteDrabble(id); 
                         handleClose();
-                    }}>Delete Anyway</Button>
-                    <Button onClick={handleClose}>Never Mind</Button>
+                    }}
+                    >Delete Anyway</Button>
+                    <Button
+                    color={theme.palette.mode === 'dark' ? "primary" : "secondary"} 
+                    onClick={handleClose}
+                    >Never Mind</Button>
                 </DialogActions>
             </Dialog>
         </div>

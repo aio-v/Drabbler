@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { EditorState } from 'draft-js';
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import Editor from '@draft-js-plugins/editor';
 import createInlineToolbarPlugin, { Separator } from '@draft-js-plugins/inline-toolbar';
 import {
@@ -24,16 +24,45 @@ export class Drabble extends React.Component {
         this.inlineToolbarPlugin = createInlineToolbarPlugin();
         this.InlineToolbar = this.inlineToolbarPlugin.InlineToolbar;
         this.state = {
-            editorState: EditorState.createEmpty()
+            editorState: EditorState.createEmpty(),
         };
         this.onChange = this.onChange.bind(this);
         this.handleKeyCommand = this.handleKeyCommand.bind(this);
     }
 
+    componentDidMount() {
+        if(localStorage.hasOwnProperty(this.props.drabbleKey)) {
+            this.loadFromLocalStorage();
+        }
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.timerID);
+    }
+
     onChange(editorState) {
+        //TBA: SAVE PROMPTS!!!!!!!!!!!!!!
+        clearTimeout(this.timerID);
+        this.timerID = setTimeout(() => {
+            this.saveToLocalStorage();
+        }, 2000);
+
         this.setState({
-            editorState: editorState
+            editorState: editorState,
         });
+    }
+
+    loadFromLocalStorage() {
+        this.setState({
+            editorState: EditorState.createWithContent(
+                convertFromRaw(JSON.parse(localStorage.getItem(this.props.drabbleKey)))
+            ),
+        });
+    }
+
+    saveToLocalStorage() {
+        const contentState = this.state.editorState.getCurrentContent();
+        localStorage.setItem(this.props.drabbleKey, JSON.stringify(convertToRaw(contentState)));
     }
 
     handleKeyCommand(command, editorState) {
