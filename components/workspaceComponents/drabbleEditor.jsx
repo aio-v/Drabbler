@@ -1,5 +1,10 @@
 import React, { useContext, useState, useMemo } from 'react';
 import { Box, Button, IconButton, useTheme, Collapse } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import DragIndicatorOutlinedIcon from '@mui/icons-material/DragIndicatorOutlined';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
 import { TransitionGroup } from 'react-transition-group';
@@ -8,7 +13,6 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Drabble } from './drabble';
 
 import styles from '../../styles/DrabbleButtons.module.css';
-import { filter } from 'draft-js/lib/DefaultDraftBlockRenderMap';
 
 const EditorContext = React.createContext();
 
@@ -57,6 +61,9 @@ export function DrabbleEditor() {
             }
         }), []
     );
+    const childrenArrSize = useMemo(
+        () => (children.length), [children]
+    )
     
     const onDragEnd = (result) => {
         // dropped outside the list
@@ -91,7 +98,7 @@ export function DrabbleEditor() {
     };
 
     return (
-        <EditorContext.Provider value={{addBtn, delBtn}}>
+        <EditorContext.Provider value={{addBtn, delBtn, childrenArrSize}}>
             <Box sx={{mb:10}}>
                 <TransitionGroup>
                     <DragDropContext onDragEnd={onDragEnd}>
@@ -188,17 +195,55 @@ export function NewDrabbleButton({ last, pos }) {
 }
 
 export function DeleteDrabbleButton({ id }) {
+    const [openDialog, setOpenDialog] = useState(false);
+    const [disable, setDisable] = useState(false);
     const editor = useContext(EditorContext);
     const theme = useTheme();
 
+    const handleClickOpen = () => {
+        if(editor.childrenArrSize == 1) {
+            setDisable(true);
+            setTimeout(() => setDisable(false), 390);
+        }
+        else {
+            setDisable(false);
+            setOpenDialog(true);
+        }
+    };
+    
+    const handleClose = () => {
+        setOpenDialog(false);
+    };
+
     return (
-        <IconButton
-        className={styles.delete_button} 
-        onClick={() => editor.delBtn.deleteDrabble(id)} 
-        color={theme.palette.mode === 'dark' ? 'primary' : 'secondary'}
-        >
-            <RemoveCircleOutlineRoundedIcon />
-        </IconButton>
+        <div>
+            <IconButton
+            onClick={handleClickOpen}
+            className={disable ? styles.shake : " " + styles.delete_button} 
+            color={theme.palette.mode === 'dark' ? 'primary' : 'secondary'}
+            >
+                <RemoveCircleOutlineRoundedIcon />
+            </IconButton>
+            <Dialog
+            open={openDialog}
+            onClose={handleClose}
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Delete this drabble?"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description"> 
+                        {"This action cannot be undone."}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => {
+                        editor.delBtn.deleteDrabble(id); 
+                        handleClose();
+                    }}>Delete Anyway</Button>
+                    <Button onClick={handleClose}>Never Mind</Button>
+                </DialogActions>
+            </Dialog>
+        </div>
     )
 }
-
