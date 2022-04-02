@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Box, Typography, useTheme } from '@mui/material';
 import { ToggleContext } from '../../pages/project';
 
-import styles from '../../styles/ToWorkspaceButton.module.css';
+import styles from './toWorkspaceButton.module.css';
 
 export function ToWorkspaceButton() {
     const theme = useTheme();

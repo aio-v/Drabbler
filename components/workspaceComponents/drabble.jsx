@@ -14,7 +14,7 @@ import { TextField, useTheme, Tooltip, Zoom } from '@mui/material';
 
 import { GoalContext } from '../workspace';
 
-import styles from '../../styles/Drabble.module.css';
+import styles from './drabble.module.css';
 
 
 export class Drabble extends React.Component {

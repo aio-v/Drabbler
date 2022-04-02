@@ -12,8 +12,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { Drabble } from './drabble';
 
-import styles from '../../styles/DrabbleButtons.module.css';
-
 const EditorContext = React.createContext();
 
 export function DrabbleEditor() {
@@ -169,8 +167,10 @@ export function DraggableDrabble({ drabble, index }) {
                     ref={provided.innerRef}
                     >
                         <Collapse in>
-                            <Box className={styles.drabble_wrapper}>
-                                <Box className={styles.button_box}
+                            <Box sx={{
+                                position: 'relative',
+                            }}>
+                                <Box className="button_box"
                                 sx={{
                                     position: 'absolute',
                                     left: '-4%', 
@@ -210,12 +210,16 @@ export function NewDrabbleButton({ last, pos }) {
         onMouseEnter={() => setOnMouseEnter(true)} 
         onMouseLeave={() => setOnMouseEnter(false)}>
             <Collapse in={onMouseEnter || last} timeout={350}>
-                    <Button 
-                    className={styles.new_button} 
+                    <Button
                     variant="text" 
                     color={theme.palette.mode === 'dark' ? "primary" : "secondary"}
                     sx={{
                         backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 233, 125, 0.1)' : 'rgba(110, 198, 255, 0.2)',
+                        width: '100%',
+                        fontFamily: 'Comfortaa',
+                        fontWeight: 300,
+                        fontSize: 18,
+                        p: 2,
                     }}
                     onClick={() => editor.addBtn.insertDrabble(pos)}>
                         New Drabble
@@ -250,7 +254,7 @@ export function DeleteDrabbleButton({ id }) {
         <div>
             <IconButton
             onClick={handleClickOpen}
-            className={disable ? styles.shake : " " + styles.delete_button} 
+            className={disable ? "shake " : " " + "delete_button"} 
             color={theme.palette.mode === 'dark' ? 'primary' : 'secondary'}
             >
                 <RemoveCircleOutlineRoundedIcon />

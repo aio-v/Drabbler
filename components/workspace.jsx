@@ -4,8 +4,6 @@ import { DrabbleEditor } from './workspaceComponents/drabbleEditor';
 import { LoadProjectMenu } from './workspaceComponents/menu';
 import { LoadToTitleButton } from './buttons/toTitleButton';
 
-import styles from '../styles/GoalHeader.module.css'
-
 export const GoalContext = createContext(100);
 
 export function Workspace() {
@@ -84,13 +82,21 @@ export function GoalHeader({ classStyle, completedCount, goalCallback }) {
 
     return (
         <React.Fragment>
-            <Box className={styles.box + " " + (transition ? styles.transition : "") + " " + (style ? styles.at_top : styles.not_at_top)}>
+            <Box className={"goal_box" + " " + (transition ? "transition" : "") + " " + (style ? "at_top" : "not_at_top")}>
                 <DrabbleCount classStyle={style} count={completedCount} />
-                <Typography className={style ? styles.at_top_text : styles.not_at_top_text}>
+                <Typography className={style ? "at_top_text" : "not_at_top_text"}
+                sx={{
+                    fontFamily: 'Comfortaa',
+                    fontWeight: 300,
+                }}>
                     {" drabbles at"} 
                 </Typography> 
                 <InputGoal classStyle={style} goalCallback={goalCallback} /> 
-                <Typography  className={style ? styles.at_top_text : styles.not_at_top_text}> 
+                <Typography className={style ? "at_top_text" : "not_at_top_text"}
+                sx={{
+                    fontFamily: 'Comfortaa',
+                    fontWeight: 300,
+                }}> 
                     words per drabble 
                 </Typography>
             </Box>
@@ -103,7 +109,11 @@ export function GoalHeader({ classStyle, completedCount, goalCallback }) {
 
 export function DrabbleCount({ classStyle, count }) {
     return (
-        <Typography className={classStyle ? styles.at_top_count : styles.not_at_top_count}>
+        <Typography className={classStyle ? "at_top_count" : "not_at_top_count"}
+        sx={{
+            fontFamily: 'Comfortaa',
+            fontWeight: 300,
+        }}>
         {count} 
         </Typography>
     )
@@ -156,7 +166,7 @@ export function InputGoal({ classStyle, goalCallback }) {
             }
         }}>
             <TextField
-            className={classStyle ? styles.at_top_input : styles.not_at_top_input}
+            className={classStyle ? "at_top_input" : "not_at_top_input"}
             type="number"
             variant="standard"
             helperText={classStyle ? "Target Length" : ''}
@@ -168,6 +178,8 @@ export function InputGoal({ classStyle, goalCallback }) {
                 },
                 "& input[type=number]": {
                     MozAppearance: "textfield",
+                    fontFamily: 'Comfortaa',
+                    fontWeight: 300,
                 },
                 "& .MuiFormHelperText-root": {
                     opacity: 0,

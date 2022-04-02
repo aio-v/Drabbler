@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Box, Typography, Grow, useTheme } from '@mui/material';
 import { ToggleContext } from '../../pages/project';
 
-import styles from '../../styles/ToTitleButton.module.css';
+import styles from './toTitleButton.module.css';
 
 export function ToTitleButton() {
     const theme = useTheme();
