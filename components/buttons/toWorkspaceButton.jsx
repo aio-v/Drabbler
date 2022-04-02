@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Box, Typography, useTheme } from '@mui/material';
+import React, { useContext, useState, useEffect } from 'react';
+import { Box, Typography, useTheme, Grow } from '@mui/material';
 import { ToggleContext } from '../../pages/project';
 
 import styles from './toWorkspaceButton.module.css';
@@ -9,7 +9,6 @@ export function ToWorkspaceButton() {
     const context = useContext(ToggleContext);
     return (
         <Box sx={{
-            mt: '7%',
             position: 'relative',
         }}>
             <button className={styles.button} onClick={context.page.togglePage}>
@@ -28,4 +27,28 @@ export function ToWorkspaceButton() {
             </button>
         </Box>
     );
+}
+
+export function LoadToWorkspaceButton() {
+    const [load, setLoad] = useState(false);
+    const context = useContext(ToggleContext);
+
+    useEffect(() => {
+        const timeoutID = setTimeout(() => {
+            setLoad(true);
+        }, 500);
+        return () => {
+            clearTimeout(timeoutID);
+        }
+    }, [load]);
+
+    return <Grow in={load && context.checked} {...(context.checked ? {timeout: 800} : {timeout: 0})}>
+                <Box sx={{
+                    left: 'calc(50% - 60px)',
+                    bottom: '6.5%',
+                    position: 'fixed',
+                }}>
+                    <ToWorkspaceButton />
+                </Box>
+            </Grow>;
 }

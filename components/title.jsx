@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material';
 import { TextField, Box } from '@mui/material';
-import { ToWorkspaceButton } from '../components/buttons/toWorkspaceButton';
+import { LoadToWorkspaceButton } from '../components/buttons/toWorkspaceButton';
 
 export function Title() {
     const [title, setTitle] = useState("");
@@ -47,7 +47,7 @@ export function Title() {
                 inputProps={{
                     style: {
                         fontFamily: 'Prompt',
-                        fontSize: 45,
+                        fontSize: 50,
                         fontWeight: 300,
                         textAlign: 'center'
                     },
@@ -56,7 +56,7 @@ export function Title() {
                     style: {
                         textAlign: 'center',
                         fontFamily: 'Comfortaa',
-                        fontSize: 15,
+                        fontSize: 20,
                         color: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.secondary.main,
                     }
                   }}
@@ -74,7 +74,7 @@ export function Title() {
             color={theme.palette.mode === 'dark' ? "primary" : "secondary"}
             sx={{
                 "& .MuiInputBase-root": {
-                    px: 2,
+                    px: '30px',
                 },
                 "& .MuiFilledInput-root": {
                     background: theme.palette.mode === 'dark' ? "" : "rgba(0, 0, 0, 0.02)",
@@ -83,9 +83,9 @@ export function Title() {
             inputProps={{
                 style: {
                     fontFamily: 'Prompt',
-                    fontSize: 24,
+                    fontSize: 27,
                     fontWeight: 300,
-                    lineHeight: '35px',
+                    lineHeight: '42px',
                     
                 },
             }}
@@ -93,13 +93,13 @@ export function Title() {
                 style: {
                     textAlign: 'center',
                     fontFamily: 'Comfortaa',
-                    fontSize: 15,
+                    fontSize: 20,
                     color: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.secondary.main,
                 }
             }} 
             />
             
-            <ToWorkspaceButton />
+            <LoadToWorkspaceButton />
         </Box>
     );
 }
