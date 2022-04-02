@@ -27,18 +27,18 @@ export function Title() {
 
     return (
         <Box sx={{
-            mt: 2,
+            mt: '2%',
             display: 'flex',
             flexDirection: 'column',
             alignContents: 'center',
             textAlign: 'center',
-            rowGap: 7,
+            rowGap: '16px',
         }}>
             <Box>
                 <TextField
                 fullWidth
                 helperText="Title"
-                placeholder="If All Else Fails, Write Your Own"
+                placeholder="365 Prompts Challenge"
                 value={title}
                 onChange={handleTitleChange}
                 variant="standard"
@@ -64,12 +64,12 @@ export function Title() {
             </Box>
             <TextField
             helperText="Summary"
-            placeholder={'"Canon\'s okay and all, but guys, WHAT IF."\n\nA story of a writer\'s work in progress, told in 100-word snippets.'}
+            placeholder={'Short enough to try, long enough to inspire.\n\n365 word prompts to celebrate the year, each filled in 100-word snippets.'}
             value={summary}
             onChange={handleSummaryChange}
             minRows={9}
             multiline
-            variant= "filled" //{theme.palette.mode === 'dark' ? "filled" : "outlined"}
+            variant= "filled"
             margin="normal"
             color={theme.palette.mode === 'dark' ? "primary" : "secondary"}
             sx={{

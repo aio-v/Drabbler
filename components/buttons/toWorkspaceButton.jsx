@@ -9,6 +9,7 @@ export function ToWorkspaceButton() {
     const context = useContext(ToggleContext);
     return (
         <Box sx={{
+            mt: '7%',
             position: 'relative',
         }}>
             <button className={styles.button} onClick={context.page.togglePage}>
