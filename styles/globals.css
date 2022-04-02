@@ -44,16 +44,16 @@ li {
   list-style-type: none;
 }
 
-.delete_button {
+button.delete_button {
   opacity: 0;
-  transition: opacity 200ms linear, color 380ms ease-in-out;
+  transition: opacity 200ms linear, color 400ms ease-in-out;
 }
 
 .button_box:hover .delete_button {
   opacity: 0.8;
 }
 
-.shake {
+button.shake {
   color: rgba(119, 119, 119, 0.8);
   animation: shake .15s;
 }

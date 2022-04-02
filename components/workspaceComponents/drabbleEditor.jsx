@@ -238,7 +238,7 @@ export function DeleteDrabbleButton({ id }) {
     const handleClickOpen = () => {
         if(editor.childrenArrSize == 1) {
             setDisable(true);
-            setTimeout(() => setDisable(false), 390);
+            setTimeout(() => setDisable(false), 400);
         }
         else {
             setDisable(false);
@@ -254,7 +254,7 @@ export function DeleteDrabbleButton({ id }) {
         <div>
             <IconButton
             onClick={handleClickOpen}
-            className={disable ? "shake " : " " + "delete_button"} 
+            className={disable ? "shake" : " " + "delete_button"} 
             color={theme.palette.mode === 'dark' ? 'primary' : 'secondary'}
             >
                 <RemoveCircleOutlineRoundedIcon />
