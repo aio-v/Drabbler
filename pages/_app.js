@@ -14,6 +14,7 @@ export default function MyApp({ Component, pageProps }) {
         <Head>
           <title>Drabbler</title>
           <meta charSet="utf-8" />
+          <meta name="viewport" content="1920" />
           <meta name="description" content="A WYSIWYG word editor for prompts, drabbles, and writing exercises." />
         </Head>
 
