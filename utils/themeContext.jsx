@@ -1,10 +1,10 @@
-import { createContext, useMemo, useState } from 'react';
+import { createContext, useMemo, useState, useEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 const ThemeContext = ({ children }) => {
-    const [mode, setMode] = useState('dark')
+    const [mode, setMode] = useState('dark');
 
     const getDesignTokens = (mode) => ({
         components: {
@@ -41,7 +41,7 @@ const ThemeContext = ({ children }) => {
             },
         }),
         []
-    )
+    );
 
     const theme = useMemo(
         () => createTheme(getDesignTokens(mode)), 

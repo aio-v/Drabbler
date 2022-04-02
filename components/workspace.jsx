@@ -110,8 +110,22 @@ export function DrabbleCount({ classStyle, count }) {
 }
 
 export function InputGoal({ classStyle, goalCallback }) {
+    const [loaded, setLoaded] = useState(false);
     const [goal, setGoal] = useState(100);
     const theme = useTheme();
+
+    useEffect(() => {
+        if(localStorage.hasOwnProperty("input_goal")) {
+            changeGoal(parseInt(localStorage.getItem("input_goal")));
+        }
+        setLoaded(true);
+    }, []);
+
+    useEffect(() => {
+        if(!loaded) return;
+        localStorage.setItem("input_goal", goal);
+    }, [goal]);
+
 
     const changeGoal = (input) => {
         goalCallback(input);

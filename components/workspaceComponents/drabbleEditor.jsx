@@ -49,7 +49,7 @@ export function DrabbleEditor() {
         }, 2000);
         setChanged(false);
         return () => clearTimeout(timeoutId);
-    }, [changed, children]);
+    }, [changed, children, loaded]);
 
     const addBtn = useMemo(
         () => ({

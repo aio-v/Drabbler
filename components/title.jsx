@@ -1,10 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useTheme } from '@mui/material';
 import { TextField, Box } from '@mui/material';
 import { ToWorkspaceButton } from '../components/buttons/toWorkspaceButton';
 
 export function Title() {
+    const [title, setTitle] = useState("");
+    const [summary, setSummary] = useState("");
     const theme = useTheme();
+
+    useEffect(() => {
+        if(localStorage.hasOwnProperty('title'))
+            setTitle(localStorage.getItem('title'));
+        if(localStorage.hasOwnProperty('summary'))
+            setSummary(localStorage.getItem('summary'));
+    }, []);
+
+    const handleTitleChange = (e) => {
+        setTitle(e.target.value);
+        localStorage.setItem('title', e.target.value);
+    }
+
+    const handleSummaryChange = (e) => {
+        setSummary(e.target.value);
+        localStorage.setItem('summary', e.target.value);
+    }
 
     return (
         <Box sx={{
@@ -20,6 +39,8 @@ export function Title() {
                 fullWidth
                 helperText="Title"
                 placeholder="If All Else Fails, Write Your Own"
+                value={title}
+                onChange={handleTitleChange}
                 variant="standard"
                 margin="normal"
                 color={theme.palette.mode === 'dark' ? "primary" : "secondary"}
@@ -44,6 +65,8 @@ export function Title() {
             <TextField
             helperText="Summary"
             placeholder={'"Canon\'s okay and all, but guys, WHAT IF."\n\nA story of a writer\'s work in progress, told in 100-word snippets.'}
+            value={summary}
+            onChange={handleSummaryChange}
             minRows={9}
             multiline
             variant= "filled" //{theme.palette.mode === 'dark' ? "filled" : "outlined"}

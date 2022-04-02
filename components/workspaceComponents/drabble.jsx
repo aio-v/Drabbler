@@ -41,7 +41,6 @@ export class Drabble extends React.Component {
     }
 
     onChange(editorState) {
-        //TBA: SAVE PROMPTS!!!!!!!!!!!!!!
         clearTimeout(this.timerID);
         this.timerID = setTimeout(() => {
             this.saveToLocalStorage();
@@ -107,7 +106,7 @@ export class Drabble extends React.Component {
                     </this.InlineToolbar>
                 </Wrapper>
                 <div className={styles.subwrapper}>
-                    <Prompt />
+                    <Prompt drabbleKey={this.props.drabbleKey} />
                     <WordCounter editorState={this.state.editorState} />
                 </div>
             </div>
@@ -121,15 +120,34 @@ export function Wrapper({ onClick, children }) {
     return (
         <div 
         className={styles.wrapper} 
-        style={{backgroundColor: theme.palette.mode === 'dark' ? 'rgba(202, 202, 202, 0.1)' : 'rgba(202, 202, 202, 0.2)'}}
+        style={{backgroundColor: theme.palette.mode === 'dark' ? 'rgba(202, 202, 202, 0.1)' : 'rgba(202, 202, 202, 0.15)'}}
         onClick={onClick}>
             {children}
         </div>
     )
 }
 
-export function Prompt() {
+export function Prompt({ drabbleKey }) {
+    const [loaded, setLoaded] = useState(false);
+    const [prompt, setPrompt] = useState("");
     const theme = useTheme();
+
+    useEffect(() => {
+        if(localStorage.hasOwnProperty("PROMPT_" + drabbleKey)) {
+            setPrompt(localStorage.getItem("PROMPT_" + drabbleKey))
+        }
+        setLoaded(true);
+    }, [drabbleKey]);
+
+    useEffect(() => {
+        if(!loaded) return;
+        localStorage.setItem("PROMPT_" + drabbleKey, prompt);
+    }, [prompt]);
+
+    const handleChange = (event) => {
+        setPrompt(event.target.value);
+    };
+
     return (
         <Tooltip 
         TransitionComponent={Zoom}
@@ -141,6 +159,8 @@ export function Prompt() {
                 fullWidth
                 helperText="Prompt"
                 variant="standard"
+                value={prompt}
+                onChange={handleChange}
                 color={theme.palette.mode === 'dark' ? 'primary' : 'secondary' }
                 sx={{
                     mb: 1,
