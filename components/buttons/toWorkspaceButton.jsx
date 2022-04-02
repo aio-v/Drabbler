@@ -14,7 +14,8 @@ export function ToWorkspaceButton() {
             <button className={styles.button} onClick={context.page.togglePage}>
                 <Typography sx={{
                     pb: 2, 
-                    fontFamily: 'Comfortaa', 
+                    fontFamily: 'Comfortaa',
+                    fontSize: 18, 
                     color: theme.palette.mode === 'dark' ? theme.palette.primary.main : 
                     theme.palette.secondary.main
                     }}>

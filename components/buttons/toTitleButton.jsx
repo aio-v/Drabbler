@@ -17,7 +17,8 @@ export function ToTitleButton() {
                     <Box className={styles.arrow} mode={theme.palette.mode}></Box>
                 </Box>
                 <Typography sx={{
-                    pt: 2, 
+                    pt: 2,
+                    fontSize: 18,  
                     fontFamily: 'Comfortaa', 
                     color: theme.palette.mode === 'dark' ? theme.palette.primary.main : 
                     theme.palette.secondary.main
