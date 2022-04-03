@@ -40,10 +40,14 @@ export function LoadButton() {
     const loadFile = () => {
         const input = document.createElement('input');
         input.type = 'file';
+        input.accept = '.dbb';
         const readFile = (e) => {
             const file = e.target.files[0];
             if (!file) return;
-            if (file.name.split('.').pop() != 'dbb') return;
+            if (file.name.split('.').pop() != 'dbb') {
+                alert("Oops! Did you choose the wrong file? Drabbler projects have a '.dbb' file extension.");
+                return;
+            }
             const fr = new FileReader();
             fr.onload = (e) => {
                 const project = JSON.parse(e.target.result);
@@ -86,7 +90,12 @@ export function ExportButton() {
         title="Export as PDF"
         placement="left"
         >
-            <IconButton size="medium" sx={{color: theme.palette.mode === 'dark' ? 'rgba(25, 9, 58, 0.7)' : 'rgb(255, 255, 255)'}}>
+            <IconButton
+            onClick={() => {alert("Coming soon :)")}} 
+            size="medium" 
+            sx={{
+                color: theme.palette.mode === 'dark' ? 'rgba(25, 9, 58, 0.7)' : 'rgb(255, 255, 255)'
+            }}>
                 <PictureAsPdfOutlinedIcon />
             </IconButton>
         </Tooltip>
