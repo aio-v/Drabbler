@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Container, Box, Typography } from '@mui/material';
+import { AppBar, Container, Box } from '@mui/material';
 import { ModeSwitch } from './modeSwitch';
 import { Logo } from './logo';
 
@@ -12,9 +12,9 @@ export function Header() {
         >
             <Container maxWidth="auto" sx={{p: 2,}}>
                 <Box sx={{display: "flex", justifyContent: "space-between"}}>
-                    <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+                    <Box sx={{ flexGrow: 1 }}>
                         <Logo />
-                    </Typography>
+                    </Box>
                     <ModeSwitch />
                 </Box>
             </Container>
