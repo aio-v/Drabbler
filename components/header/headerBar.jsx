@@ -13,10 +13,11 @@ export function Header() {
             <Container maxWidth="auto" sx={{p: 2,}}>
                 <Box 
                 sx={{
+                    m: 1,
                     display: "flex", 
                     justifyContent: "space-between",
                 }}>
-                    <Box sx={{ m: 1, flexGrow: 1 }}>
+                    <Box sx={{ flexGrow: 1 }}>
                         <Logo />
                     </Box>
                     <ModeSwitch />

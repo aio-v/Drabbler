@@ -14,7 +14,6 @@ export function ModeSwitch() {
             size="medium" 
             onClick={colorMode.toggleColorMode} 
             sx={{
-                m: 1,
                 color: theme.palette.mode === 'dark' ? theme.palette.primary.main : theme.palette.secondary.main,
             }}>
             {theme.palette.mode === 'dark' ? <LightModeRoundedIcon fontSize="medium" /> : <DarkModeRoundedIcon fontSize="medium" />}
