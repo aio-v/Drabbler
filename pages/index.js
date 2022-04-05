@@ -16,6 +16,7 @@ export default function Home() {
           direction="column"
           justifyContent="center"
           alignItems="space-around"
+          spacing={3}
           sx={{
             height: '100%',
           }}
