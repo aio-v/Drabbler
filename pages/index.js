@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material'
+import { Grid, Box } from '@mui/material'
 import { Layout } from '../layouts/layout'
 import { Intro } from '../components/intro'
 import { CreateButton } from '../components/buttons/createButton'
@@ -7,20 +7,38 @@ import { LoadButton } from '../components/buttons/loadButton'
 export default function Home() {
   return (
       <Layout>
-        <Intro />
-        <Grid
+        <Box sx={{
+          position: 'fixed',
+          height: '100%',
+        }}>
+          <Grid
           container
-          direction="row"
-          justifyContent="space-evenly"
-          alignItems="center"
-        >
-          <Grid item xl={4} align="center">
-            <CreateButton />
+          direction="column"
+          justifyContent="center"
+          alignItems="space-around"
+          sx={{
+            height: '100%',
+          }}
+          >
+            <Grid item>
+              <Intro />
+            </Grid>
+            <Grid 
+            container 
+            item
+            direction="row"
+            justifyContent="space-around"
+            xs={4}
+            >
+              <Grid item>
+                <CreateButton />
+              </Grid>
+              <Grid item>
+                <LoadButton />
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid item xl={4} align="center">
-            <LoadButton />
-          </Grid>
-        </Grid>
+        </Box>
       </Layout>
   )
 }
